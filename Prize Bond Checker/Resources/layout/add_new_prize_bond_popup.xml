@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/add_new_bond_popup"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="@string/enter_bond_number"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/textView1"
+        />
+        <EditText
+            android:id="@+id/bond_number_entry_field"
+            android:inputType="textFilter"
+            android:digits="0123456789,~"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/textView1"
+            android:minWidth="100px"
+            android:minHeight="25px"
+        />
+        <Button
+            android:id="@+id/add_bond"
+            android:text="@android:string/ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/abc_text_size_body_1_material"
+            android:layout_below="@id/bond_number_entry_field"
+            android:layout_alignRight="@id/bond_number_entry_field"
+            android:backgroundTint="@android:color/holo_green_light"
+        />
+        <Button
+            android:id="@+id/cancel"
+            android:text="@android:string/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/bond_number_entry_field"
+            android:layout_toLeftOf="@id/add_bond"
+            android:layout_marginRight="@dimen/def_drawer_elevation"
+            android:backgroundTint="@android:color/holo_red_light"
+        />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
