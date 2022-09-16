@@ -24,6 +24,13 @@
             android:text="@string/start_page_helper_info"
         />
 
+        <ListView
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/listView2"
+        />
 
         <include
             android:id="@+id/add_bond_popup"
@@ -35,7 +42,6 @@
             android:visibility="gone"
             layout="@layout/add_new_prize_bond_popup"
         />
-
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
@@ -59,6 +65,14 @@
         android:background="?android:attr/windowBackground"
         android:layout_alignParentBottom="true"
         app:menu="@menu/navigation"
+    />
+    <ListView
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/child_container_prizebonds"
+        android:id="@+id/listView1"
     />
 
 </RelativeLayout>

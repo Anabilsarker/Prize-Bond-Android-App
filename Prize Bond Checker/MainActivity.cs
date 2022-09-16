@@ -1,5 +1,6 @@
 ﻿using Android.App;
 using Android.Content;
+using Xamarin.Essentials;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -23,7 +24,7 @@ namespace Prize_Bond_Checker
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            Xamarin.Essentials.Platform.Init(this, savedInstanceState);
+            Platform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.activity_main);
 
             InitUIEvents();
@@ -99,11 +100,16 @@ namespace Prize_Bond_Checker
             QueryBonds queryBonds = new QueryBonds();
             if (await queryBonds.PostRequest(bondNumber.Text))
             {
-                View view = (View)sender;
-                Snackbar.Make(view, queryBonds.BondResult(), Snackbar.LengthLong).SetAction("Action", (View.IOnClickListener)null).Show();
+                Android.App.AlertDialog.Builder dialog = new Android.App.AlertDialog.Builder(this);
+                Android.App.AlertDialog result = dialog.Create();
+                result.SetTitle("Result");
+                result.SetMessage("Match Found: " + queryBonds.BondResult());
+                result.SetButton("OK", (c, ev) =>
+                {
+                    result.Cancel(); 
+                });
+                result.Show();
             }
-
-
         }
         private void Cancel_Click(object sender, EventArgs e)
         {

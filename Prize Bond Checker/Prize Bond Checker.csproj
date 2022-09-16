@@ -61,7 +61,7 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Database\SQLite.cs" />
+    <Compile Include="Database\SQLiteDatabase.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Models\Bonds.cs" />
     <Compile Include="QueryBonds.cs" />

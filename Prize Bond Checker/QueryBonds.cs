@@ -2,16 +2,19 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Prize_Bond_Checker.Database;
 
 namespace Prize_Bond_Checker
 {
     public class QueryBonds
     {
         private string ResponseValue { get; set; }
+        private string RequestValue { get; set; }
         public async Task<bool> PostRequest(string value)
         {
             try
             {
+                RequestValue = value;
                 var values = new Dictionary<string, string>
                 {
                     { "gsearch", $"{value}" }
@@ -55,6 +58,35 @@ namespace Prize_Bond_Checker
             else
             {
                 return "0";
+            }
+        }
+        public async void ParseInput(string value)
+        {
+            bool isRange;
+            var parts = value.Split(',');
+            foreach(var part in parts)
+            {
+                var ranges = part.Split('~');
+                if (ranges.Length == 1) isRange = false;
+                else if (ranges.Length == 2) isRange = true;
+                else throw new Exception("Invalid Input");
+                foreach(var range in ranges)
+                {
+                    if(isRange)
+                    {
+                        var bondNum = range[0];
+                        while(bondNum <= range[1])
+                        {
+                            await SQLiteDatabase.AddBonds(bondNum);
+                            bondNum++;
+                        }
+                    }
+                    else
+                    {
+                        var bondNum = range[0];
+                        await SQLiteDatabase.AddBonds(bondNum);
+                    }
+                }
             }
         }
     }
