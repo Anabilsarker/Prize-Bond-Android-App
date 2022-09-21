@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Android.App;
 using Prize_Bond_Checker.Database;
 
 namespace Prize_Bond_Checker
@@ -60,7 +61,7 @@ namespace Prize_Bond_Checker
                 return "0";
             }
         }
-        public async void ParseInput(string value)
+        public async Task<bool> ParseInput(string value)
         {
             bool isRange;
             var parts = value.Split(',');
@@ -69,25 +70,38 @@ namespace Prize_Bond_Checker
                 var ranges = part.Split('~');
                 if (ranges.Length == 1) isRange = false;
                 else if (ranges.Length == 2) isRange = true;
-                else throw new Exception("Invalid Input");
-                foreach(var range in ranges)
+                else { return false; }
+                //foreach(var range in ranges)
                 {
-                    if(isRange)
+                    if(ranges[0].Length == 7)
                     {
-                        var bondNum = range[0];
-                        while(bondNum <= range[1])
+                        int bondNum = int.Parse(ranges[0]);
+                        if (isRange)
                         {
-                            await SQLiteDatabase.AddBonds(bondNum);
-                            bondNum++;
+                            while (bondNum <= int.Parse(ranges[1]))
+                            {
+                                if (!await SQLiteDatabase.BondExists(bondNum))
+                                {
+                                    await SQLiteDatabase.AddBonds(bondNum);
+                                    bondNum++;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (!await SQLiteDatabase.BondExists(bondNum))
+                            {
+                                await SQLiteDatabase.AddBonds(bondNum);
+                            }
                         }
                     }
                     else
                     {
-                        var bondNum = range[0];
-                        await SQLiteDatabase.AddBonds(bondNum);
+                        return false;
                     }
                 }
             }
+            return true;
         }
     }
 }

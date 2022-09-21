@@ -61,6 +61,7 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomAdapter.cs" />
     <Compile Include="Database\SQLiteDatabase.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Models\Bonds.cs" />
@@ -156,6 +157,11 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\add_new_prize_bond_popup.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\bond_item_list.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

@@ -8,7 +8,13 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_main">
 
-
+    <ListView
+        android:id="@+id/bondNumbertListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fastScrollEnabled="true"
+    />
+    
     <RelativeLayout
         android:id="@+id/child_container_prizebonds"
         android:layout_width="match_parent"
@@ -22,14 +28,6 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/start_page_helper_info"
-        />
-
-        <ListView
-            android:minWidth="25px"
-            android:minHeight="25px"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/listView2"
         />
 
         <include
@@ -56,6 +54,7 @@
         />
 
     </RelativeLayout>
+    
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation"
@@ -65,14 +64,6 @@
         android:background="?android:attr/windowBackground"
         android:layout_alignParentBottom="true"
         app:menu="@menu/navigation"
-    />
-    <ListView
-        android:minWidth="25px"
-        android:minHeight="25px"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/child_container_prizebonds"
-        android:id="@+id/listView1"
     />
 
 </RelativeLayout>

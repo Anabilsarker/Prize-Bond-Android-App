@@ -1,6 +1,4 @@
 ﻿using Android.App;
-using Android.Content;
-using Xamarin.Essentials;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -11,8 +9,9 @@ using AndroidX.Core.View;
 using AndroidX.DrawerLayout.Widget;
 using Google.Android.Material.FloatingActionButton;
 using Google.Android.Material.Navigation;
-using Google.Android.Material.Snackbar;
+using Prize_Bond_Checker.Database;
 using System;
+using Xamarin.Essentials;
 
 namespace Prize_Bond_Checker
 {
@@ -65,12 +64,12 @@ namespace Prize_Bond_Checker
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
-            Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
-        private void InitUIEvents()
+        private async void InitUIEvents()
         {
             addNewBondLayout = FindViewById<CardView>(Resource.Id.add_bond_popup);
             bondNumber = FindViewById<EditText>(Resource.Id.bond_number_entry_field);
@@ -86,6 +85,10 @@ namespace Prize_Bond_Checker
 
             NavigationView navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
             navigationView.SetNavigationItemSelectedListener(this);
+
+            ListView listView = FindViewById<ListView>(Resource.Id.bondNumbertListView);
+            CustomAdapter customAdapter = new CustomAdapter(await SQLiteDatabase.GetBonds(), this.ApplicationContext);
+            listView.Adapter = customAdapter;
         }
         private void FabOnClick(object sender, EventArgs eventArgs)
         {
@@ -106,15 +109,29 @@ namespace Prize_Bond_Checker
                 result.SetMessage("Match Found: " + queryBonds.BondResult());
                 result.SetButton("OK", (c, ev) =>
                 {
-                    result.Cancel(); 
+                    result.Cancel();
                 });
                 result.Show();
             }
+            if (!await queryBonds.ParseInput(bondNumber.Text))
+                InvalidInput();
         }
         private void Cancel_Click(object sender, EventArgs e)
         {
             bondNumber.Text = "";
             addNewBondLayout.Visibility = ViewStates.Gone;
+        }
+        private void InvalidInput()
+        {
+            Android.App.AlertDialog.Builder dialog = new Android.App.AlertDialog.Builder(this);
+            Android.App.AlertDialog result = dialog.Create();
+            result.SetTitle("Error");
+            result.SetMessage("Incorrect Entry");
+            result.SetButton("OK", (c, ev) =>
+            {
+                result.Cancel();
+            });
+            result.Show();
         }
         public bool OnNavigationItemSelected(IMenuItem item)
         {

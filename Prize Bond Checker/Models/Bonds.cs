@@ -15,6 +15,6 @@ namespace Prize_Bond_Checker.Models
     public class Bonds
     {
         [PrimaryKey]
-        public long BondNumber { get; set; }
+        public int BondNumber { get; set; }
     }
 }
